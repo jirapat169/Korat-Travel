@@ -1,0 +1,114 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <a class="navbar-brand" [routerLink]="['/admin']">ผู้ดูแลระบบ</a>
+</nav>
+
+<div class="container" style="margin-top : 20px;">
+  <div class="card">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md">
+          <h5><b>สถานที่ท่องเที่ยวทั้งหมด</b></h5>
+        </div>
+        <div class="col-md text-right">
+          <button
+            type="button"
+            class="btn btn-primary btn-md"
+            data-toggle="modal"
+            data-target="#exampleManageLocation"
+            (click)="initialFormLocation()"
+          >
+            เพิ่มข้อมูล
+          </button>
+        </div>
+      </div>
+
+      <div style="padding :15px;" *ngIf="travelLocation.length <= 0">
+        ไม่พบข้อมูล
+      </div>
+      <div style="padding :15px;" *ngIf="travelLocation.length > 0">
+        <div class="row">
+          <div
+            class="col-md-4 mb-3"
+            *ngFor="let x of travelLocation; let i = index"
+          >
+            <div class="card crop">
+              <img
+                src="{{ x.lastImage }}"
+                class="card-img-top"
+                alt="img{{ i }}"
+              />
+              <div class="card-body">
+                <h5 class="card-title">{{ x.name }}</h5>
+                <p class="card-text">{{ x.mark }}</p>
+                <div class="text-center">
+                  <a href="#" class="btn btn-primary">อ่านบทความ</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Manage Location -->
+<div
+  class="modal fade"
+  id="exampleManageLocation"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleManageLocationTitle"
+  aria-hidden="true"
+  data-keyboard="false"
+  data-backdrop="static"
+>
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content">
+      <form
+        focusInvalidInput
+        [formGroup]="formLocation"
+        (ngSubmit)="formLocationSubmit()"
+      >
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleManageLocationTitle">
+            ข้อมูลสถานที่ท่องเที่ยว
+          </h5>
+          <button
+            type="button"
+            class="close"
+            data-dismiss="modal"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label>ชื่อสถานที่</label>
+            <input type="text" class="form-control" formControlName="name" />
+          </div>
+
+          <div class="form-group">
+            <label>ตำแหน่งที่ตั้ง (อำเภอ)</label>
+            <input type="text" class="form-control" formControlName="mark" />
+          </div>
+
+          <div style="margin-top: 15px;">
+            <label>เนื้อหา (โปรดใส่รูปภาพอย่างน้อย 1 รูป)</label>
+            <textarea
+              [froalaEditor]="options"
+              formControlName="content"
+            ></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">
+            ยกเลิก
+          </button>
+          <button type="submit" class="btn btn-primary">บันทึก</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
